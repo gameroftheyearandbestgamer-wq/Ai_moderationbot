@@ -1,0 +1,39 @@
+"""
+Simple Moderation AI Prototype
+--------------------------------
+This script is a minimal text moderation prototype.
+It uses simple rules to flag inappropriate content.
+"""
+
+# List of banned keywords for demo purposes
+BANNED_WORDS = ["badword", "toxic", "hate", "racist", "kill"]
+
+def moderate_text(text: str) -> dict:
+    """
+    Check input text and return moderation result.
+    """
+    lowered = text.lower()
+    violations = [word for word in BANNED_WORDS if word in lowered]
+
+    return {
+        "original_text": text,
+        "is_allowed": len(violations) == 0,
+        "violations": violations
+    }
+
+if __name__ == "__main__":
+    print("Simple Moderation AI Prototype")
+    print("Type 'quit' to exit.\n")
+
+    while True:
+        user_input = input("Enter text: ")
+        if user_input.lower() == "quit":
+            print("Exiting moderation AI. Goodbye!")
+            break
+
+        result = moderate_text(user_input)
+        if result["is_allowed"]:
+            print("✅ Allowed")
+        else:
+            print(f"❌ Blocked. Violations: {result['violations']}")
+
